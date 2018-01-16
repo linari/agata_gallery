@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * Implements menu_hook()
+ *
+ * Setup routes to their appropriate functions
+ */
+function agata_gallery_menu() {
+  $items = array();
+  
+  $items['galerija'] = array(
+    'title' => 'Galerija',
+    'page callback' => 'agata_gallery_print_gallery',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+
+/**
+ * Callback for the menu item.
+ */
+function agata_gallery_print_gallery() {
+  return theme('agata_gallery');
+}
+
+/**
+ * Implements hook_theme().
+ */
+function agata_gallery_theme() {
+  return array(
+    'agata_gallery' => array(
+      'template' => 'templates/gallery-page',
+      'variables' => array('videos' => NULL),
+    ),
+  );
+}
+
+/**
+ * Preprocesses variables for agata_events table.
+ */
+function template_preprocess_agata_gallery(&$variables) {
+  $path = current_path();
+  $year = strpos($path, '20') !== false ? substr($path, -4) : date("Y");
+  $videos = array();
+  
+  $videos = agata_gallery_get_videos($year);
+  
+//  $video = array();
+//  foreach ($videos as $nid => $e) {
+//    $video['title'] = $e->title;
+//    $video['year'] = $e->field_album_year[LANGUAGE_NONE][0]['value'];
+//    $video['video'] = $e->field_video;
+//  }
+  ksort($videos, SORT_NATURAL);
+//  
+  $variables['videos'] = $videos;
+}
+
+
+/**
+ * 
+ */
+function agata_gallery_get_videos($year) {
+  
+  $query = new EntityFieldQuery();
+  $result = $query
+    ->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'video')
+    ->fieldCondition('field_album_year', 'value', $year, '=')
+    ->execute();
+  
+  $videos = array();
+  if (!empty($result)) {
+    $ids = array_keys($result['node']);
+    $videos = entity_load('node', $ids);
+  }
+
+  return $videos;
+  
+}

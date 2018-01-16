@@ -1,0 +1,11 @@
+name = AGATA Gallery
+description = Creates a page with tabs to show video and facebook albums
+core = 7.x
+;configure = admin/config/services/agata_gallery
+version = "7.x-1.0"
+project = "agata_gallery"
+
+scripts[] = 'js/agata_gallery.js'
+
+
+
