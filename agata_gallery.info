@@ -5,7 +5,11 @@ core = 7.x
 version = "7.x-1.0"
 project = "agata_gallery"
 
+stylesheets[all][] = css/jquery.fancybox.css
+
 scripts[] = 'js/agata_gallery.js'
+scripts[] = 'js/jquery.fancybox.js'
+;scripts[] = 'js/jquery.browser.min.js'
 
 
 
