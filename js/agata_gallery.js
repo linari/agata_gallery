@@ -12,8 +12,12 @@
     });
 
     $(".fancybox").fancybox({
-      beforeShow : function(){
+      beforeShow : function() {
         this.title =  $(this.element).data("caption");
+        $('body').addClass('fancybox-opened');
+      },
+      afterClose: function() {
+        $('body').removeClass('fancybox-opened');
       }
     });
     
