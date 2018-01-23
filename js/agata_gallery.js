@@ -12,12 +12,28 @@
     });
 
     $(".fancybox").fancybox({
+      scrolling	: 'auto',
       beforeShow : function() {
         this.title =  $(this.element).data("caption");
         $('body').addClass('fancybox-opened');
+        $("body").css({'overflow-y':'hidden'});
       },
       afterClose: function() {
         $('body').removeClass('fancybox-opened');
+        $("body").css({'overflow-y':'visible'});
+      },
+      afterShow: function() {
+        $('.fancybox-wrap').swipe({
+          swipe : function(event, direction) {
+            if (direction === 'left') {
+              $.fancybox.prev( direction );
+            } else if (direction === 'right'){
+              $.fancybox.next( direction );
+            }
+          }
+        });
+      },
+      afterLoad : function() {
       }
     });
     

@@ -9,6 +9,7 @@ stylesheets[all][] = css/jquery.fancybox.css
 
 scripts[] = 'js/agata_gallery.js'
 scripts[] = 'js/jquery.fancybox.js'
+scripts[] = 'js/jquery.touchSwipe.js'
 ;scripts[] = 'js/jquery.browser.min.js'
 
 
